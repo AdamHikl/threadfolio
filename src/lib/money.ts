@@ -16,6 +16,21 @@ export function rangeOf(low: number | null, high: number | null): PriceRange | n
   return low <= high ? { low, high } : { low: high, high: low };
 }
 
+/** Convert a whole-dollar range (as returned by the scan service) to cents. */
+export function dollarsToCents(range: PriceRange | null): PriceRange | null {
+  return range ? { low: Math.round(range.low * 100), high: Math.round(range.high * 100) } : null;
+}
+
+/**
+ * Parse what the user typed as a price ("45", "$45", "45.50") into cents.
+ * Returns null for empty or invalid input.
+ */
+export function parsePriceInput(text: string): number | null {
+  const cleaned = text.replace(/[$,\s]/g, '');
+  if (!/^\d+(\.\d{0,2})?$/.test(cleaned)) return null;
+  return Math.round(Number(cleaned) * 100);
+}
+
 export function formatCents(cents: number, currency = 'USD'): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
