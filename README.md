@@ -48,4 +48,6 @@ Issues and pull requests are welcome. Please use made-up sample data in issues a
 
 ## License
 
-[GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0-only). Copyright (C) 2026 Adam Hikl.
+[Mozilla Public License 2.0](LICENSE) (MPL-2.0). Copyright (C) 2026 Adam Hikl.
+
+If you modify Threadfolio's files and distribute them, you must share those modified files under MPL 2.0. The license does not grant rights to the "Threadfolio" name or logo.
