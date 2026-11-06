@@ -42,6 +42,16 @@ cp .env.example .env   # then set EXPO_PUBLIC_SCAN_API_URL
 npx expo start         # scan the QR code with Expo Go, or press i / a
 ```
 
+Development builds fill the app with a few made-up sample pieces so the screens aren't empty.
+
+Checks (the same ones CI runs):
+
+```bash
+npm run typecheck
+npm run lint
+npm test
+```
+
 ## Contributing
 
 Issues and pull requests are welcome. Please use made-up sample data in issues and tests, never real personal data, and never commit API keys (`.env` is git-ignored; use `.env.example`).

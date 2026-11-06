@@ -8,9 +8,10 @@ import { useColors } from '@/theme/colors';
 type IconName = ComponentProps<typeof Ionicons>['name'];
 
 function icon(name: IconName) {
-  return ({ color, size }: { color: ColorValue; size: number }) => (
-    <Ionicons name={name} color={color as string} size={size} />
-  );
+  function TabIcon({ color, size }: { color: ColorValue; size: number }) {
+    return <Ionicons name={name} color={color as string} size={size} />;
+  }
+  return TabIcon;
 }
 
 export default function TabLayout() {

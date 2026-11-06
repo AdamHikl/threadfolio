@@ -5,9 +5,10 @@ Milestones are in order. Each one should end with a working app you can try on a
 ## M0 — Foundations (~4 h)
 - [x] Expo + TypeScript scaffold
 - [x] AGPL v3 license, README, roadmap, `.env.example`
-- [ ] Navigation with tabs: Scan · Collection · Outfits · Wishlist
-- [ ] Local SQLite database and data model (items, photos, outfits, wishlist)
-- [ ] Lint, typecheck and a test runner in CI (GitHub Actions)
+- [x] Navigation with tabs: Scan · Collection · Outfits · Wishlist
+- [x] Local SQLite database and data model (items, photos, outfits, wishlist)
+- [x] Collection and wishlist lists with value totals (made-up sample data in dev builds)
+- [x] Lint, typecheck and unit tests in CI (GitHub Actions)
 
 ## M1 — Scan and decide (~15 h) ← first usable version
 - [ ] Camera / photo picker, with an optional second photo of the label or tag
