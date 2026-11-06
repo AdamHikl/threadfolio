@@ -24,7 +24,7 @@ Threadfolio is built for buyers, not resellers: it helps you avoid overpaying an
 
 - [Expo](https://expo.dev) + React Native + TypeScript (one codebase for iOS and Android)
 - Local-first storage on the device (SQLite). No account needed, and your collection stays on your phone.
-- A small scan service (planned: a serverless function) that sends the photo to a vision AI model for identification. It keeps the API key on the server and does not store photos.
+- A small scan service (an [Expo Router API route](src/app/api/scan+api.ts)) that sends the photo to Claude's vision model and returns structured JSON. It keeps the API key on the server and does not store photos.
 
 ## Privacy
 
@@ -38,11 +38,13 @@ Requirements: Node.js 20+ and the [Expo Go](https://expo.dev/go) app on your pho
 git clone https://github.com/AdamHikl/threadfolio.git
 cd threadfolio
 npm install
-cp .env.example .env   # then set EXPO_PUBLIC_SCAN_API_URL
+cp .env.example .env   # optional: add ANTHROPIC_API_KEY for real scans
 npx expo start         # scan the QR code with Expo Go, or press i / a
 ```
 
-Development builds fill the app with a few made-up sample pieces so the screens aren't empty.
+Without an API key, scans return a made-up sample result so you can try the whole flow at no cost. With `ANTHROPIC_API_KEY` set in `.env`, the `/api/scan` route sends the photo to Claude (model `claude-opus-5-5` by default; override with `SCAN_MODEL`). The key is read only on the server and never ships in the app.
+
+Development builds also fill the app with a few made-up sample pieces so the screens aren't empty.
 
 Checks (the same ones CI runs):
 

@@ -11,13 +11,17 @@ Milestones are in order. Each one should end with a working app you can try on a
 - [x] Lint, typecheck and unit tests in CI (GitHub Actions)
 
 ## M1 — Scan and decide (~15 h) ← first usable version
-- [ ] Camera / photo picker, with an optional second photo of the label or tag
-- [ ] Scan service (serverless function) that calls a vision model and returns structured JSON: category, brand, era, materials, confidence
-- [ ] Price card: new price range, vintage shop range, and confidence
-- [ ] "Is this a fair price?" Enter the tag price and get *Good deal / Fair / Overpriced*
-- [ ] "Before you buy" checklist for each category and era (curated rules + AI notes)
-- [ ] "Check real prices" links to sold-listing searches (eBay, Etsy, Depop) that open in the browser
-- [ ] Save to Collection or Wishlist
+- [x] Camera / photo picker, with an optional second photo of the label or tag
+- [x] Scan service (`/api/scan` route) that calls a vision model and returns structured JSON: category, brand, era, materials, confidence
+- [x] Mock mode: made-up scan results when no API key is set, so the flow works without cost
+- [x] Price card: new price range, vintage shop range, and confidence
+- [x] "Is this a fair price?" Enter the tag price and get *Good deal / Fair / Overpriced*
+- [x] "Before you buy" checklist for each category (curated rules + AI notes)
+- [x] "Check real prices" links to sold-listing searches (eBay, Etsy, Depop) that open in the browser
+- [x] Save to Collection or Wishlist, with photos kept on the device
+- [ ] Try real scans with an API key on a set of test photos and tune the prompt
+- [ ] Deploy the scan route (EAS Hosting) with rate limiting, and point production builds at it
+- [ ] Curated checklist rules by era, not just category
 
 ## M2 — Collection (~10 h)
 - [ ] Collection grid with filters (category, era, brand, colour)

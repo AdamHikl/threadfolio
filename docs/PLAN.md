@@ -22,7 +22,7 @@ Phone (Expo app)                          Scan service (serverless)
 ```
 
 - **App:** Expo (managed workflow), TypeScript, Expo Router (tabs), `expo-sqlite`, `expo-camera` / `expo-image-picker`, `expo-file-system` for photos.
-- **Scan service:** one HTTP endpoint (for example a Cloudflare Worker or Supabase Edge Function). It holds the AI provider key so the key never ships in the app. It returns a strict JSON shape (`category`, `brand`, `era`, `materials`, `newPriceRange`, `vintagePriceRange`, `confidence`, `checks[]`) validated with a schema (zod).
+- **Scan service:** an Expo Router API route, `POST /api/scan` ([src/app/api/scan+api.ts](../src/app/api/scan+api.ts)), served by the dev server locally and deployable to EAS Hosting. It holds the AI provider key so the key never ships in the app. It asks Claude for a strict JSON shape ([src/scan/schema.ts](../src/scan/schema.ts): category, brand, era, materials, new and vintage price ranges, confidence, checks) using structured outputs, and the app validates the response with the same zod schema. With no key set, it returns a made-up mock result.
 - **Checklist:** a curated rules file in the repo (`src/checks/*.ts`, by category and era: denim, band tees, leather, knitwear, outerwear and more), merged with AI-specific notes. The curated rules are the part competitors don't have.
 - **Prices in v1:** AI estimate shown as a range with confidence, plus deep links to sold-listing searches on eBay, Etsy and Depop so the user can verify. No scraping. A licensed price-data source can come later.
 
