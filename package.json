@@ -18,5 +18,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
-  "private": true
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "description": "Scan vintage clothing, check it before you buy, and build your collection and outfits."
 }
