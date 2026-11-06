@@ -1,5 +1,21 @@
-import { EmptyState } from '@/components/Screen';
+import { ItemList, SummaryBox } from '@/components/ItemList';
+import { wishlistTotal } from '@/db/items';
+import { formatRange } from '@/lib/money';
 
 export default function WishlistScreen() {
-  return <EmptyState title="Wishlist" subtitle="Pieces you're hunting for will appear here." />;
+  return (
+    <ItemList
+      status="wishlist"
+      emptyTitle="Wishlist"
+      emptySubtitle="Pieces you're hunting for will appear here."
+      renderSummary={(items) => (
+        <SummaryBox
+          lines={[
+            ['Pieces', String(items.length)],
+            ['Estimated total', formatRange(wishlistTotal(items))],
+          ]}
+        />
+      )}
+    />
+  );
 }
