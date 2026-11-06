@@ -27,7 +27,15 @@
     "plugins": [
       "expo-router",
       "expo-status-bar",
-      "expo-sqlite"
+      "expo-sqlite",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Threadfolio uses your photos to identify clothing you want to scan.",
+          "cameraPermission": "Threadfolio uses the camera to photograph clothing you want to scan.",
+          "microphonePermission": false
+        }
+      ]
     ],
     "scheme": "threadfolio",
     "experiments": {
