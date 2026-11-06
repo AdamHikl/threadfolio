@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "threadfolio",
+    "name": "Threadfolio",
     "slug": "threadfolio",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.adamhikl.threadfolio"
     },
     "android": {
       "adaptiveIcon": {
@@ -16,10 +17,20 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.adamhikl.threadfolio"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-sqlite"
+    ],
+    "scheme": "threadfolio",
+    "experiments": {
+      "typedRoutes": true
     }
   }
 }
