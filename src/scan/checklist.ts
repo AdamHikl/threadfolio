@@ -18,6 +18,8 @@ const BY_CATEGORY: Partial<Record<Category, string[]>> = {
     'Check the print for cracking and whether it sits in the fabric or on top.',
   ],
   denim: [
+    'On Levi\'s, read the red tab: "LEVI\'S" in all capitals (big E) means pre-1971 and is worth much more.',
+    'Turn up the outseam: a coloured selvedge line usually means older denim.',
     'Check the crotch and inner thighs for thinning or blowouts.',
     'Look at the back of the top button and rivets for maker stamps.',
     'Read the care tag and fabric content; stretch blends are usually newer.',
@@ -28,7 +30,8 @@ const BY_CATEGORY: Partial<Record<Category, string[]>> = {
     'Check for felting or bobbling where it rubs.',
   ],
   outerwear: [
-    'Test every zip, snap and button.',
+    'Test every zip, snap and button, and note the zip maker (Talon, Conmar, Scovill suggest older pieces).',
+    'Look for a union label or RN/WPL number on US-made labels; it helps date the piece.',
     'Check the lining for tears and the pocket bags for holes.',
     'For leather or suede, check for cracking, dryness and stiff patches.',
   ],

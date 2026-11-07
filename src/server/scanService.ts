@@ -37,7 +37,15 @@ From the photo (and the label photo, if given):
 - Estimate what a comparable NEW item costs today, and the typical price range for this piece in vintage shops and secondhand marketplaces, in whole US dollars. Give honest ranges and lower your confidence when the photo is unclear.
 - List up to five things the buyer should check on this specific piece (condition, authenticity, fit). Be concrete and short.
 - Write a short search query someone could use to find comparable sold listings.
-If the photo doesn't show clothing, shoes or an accessory, set isClothing to false and keep other fields minimal.`;
+If the photo doesn't show clothing, shoes or an accessory, set isClothing to false and keep other fields minimal.
+
+Date pieces from construction details, not just style, because many styles have been made for decades. Look closely for collector tells such as:
+- Levi's red tab: "LEVI'S" in all capitals (the "big E") means made before about 1971 and is worth far more than "Levi's" with a small e. Also selvedge outseams, hidden rivets, and the care tag style.
+- T-shirts: single-stitch sleeve and hem usually mean before the late 1990s; tag brand, country of origin and fabric blend help date it.
+- US-made labels: union labels (ILGWU, ACWA), "RN" and "WPL" numbers, and the presence or absence of care symbols (after the early 1970s).
+- Zippers and hardware: metal zips and maker names (Talon, Conmar, Scovill), snap and button stamps.
+- Leather jackets: lining, zip brand, pocket shape and label style separate decades of the same model.
+When a valuable variant is possible but the photo can't confirm it, say so in the summary, widen the price range to cover both cases, and make the first check tell the buyer exactly what to look at (for example "Photograph the red tab: capital E means pre-1971").`;
 
 const SEARCH_INSTRUCTIONS = `
 You have a web_search tool. Before answering, run up to 3 focused searches to ground your prices and checks in current evidence: recent sold or listed prices for comparable pieces (eBay sold listings, Etsy, Depop, Grailed, vintage shops) and, if useful, collector guidance on dating or authenticating this kind of item (Reddit, blogs, brand histories). Prefer recent sold prices over asking prices. Skip searching if the photo isn't clothing.
