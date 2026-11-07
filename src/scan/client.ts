@@ -1,6 +1,6 @@
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 
-import { ScanResponseSchema, type ScanResponse } from './schema';
+import { ScanResponseSchema, type ScanMode, type ScanResponse } from './schema';
 
 export type PreparedPhoto = { uri: string; base64: string };
 
@@ -15,11 +15,15 @@ export async function preparePhoto(uri: string): Promise<PreparedPhoto> {
 }
 
 /** Send photos to the scan service and validate what comes back. */
-export async function requestScan(photo: PreparedPhoto, label?: PreparedPhoto): Promise<ScanResponse> {
+export async function requestScan(
+  photo: PreparedPhoto,
+  label?: PreparedPhoto,
+  mode: ScanMode = 'quick',
+): Promise<ScanResponse> {
   const response = await fetch('/api/scan', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ photo: photo.base64, labelPhoto: label?.base64 }),
+    body: JSON.stringify({ photo: photo.base64, labelPhoto: label?.base64, mode }),
   });
   const body: unknown = await response.json().catch(() => null);
   if (!response.ok) {

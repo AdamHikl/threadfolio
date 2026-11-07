@@ -36,7 +36,7 @@ export default function ScanScreen() {
   const [photo, setPhoto] = useState<PreparedPhoto | null>(null);
   const [label, setLabel] = useState<PreparedPhoto | null>(null);
   const [result, setResult] = useState<ScanResponse | null>(null);
-  const [busy, setBusy] = useState<'preparing' | 'scanning' | 'saving' | null>(null);
+  const [busy, setBusy] = useState<'preparing' | 'scanning' | 'deep' | 'saving' | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   function reset() {
@@ -70,6 +70,20 @@ export default function ScanScreen() {
       setResult(await requestScan(photo, label ?? undefined));
     } catch (e) {
       setError(e instanceof Error ? e.message : 'The scan failed. Please try again.');
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  /** Re-scan the same photos with the slower, web-searching Deep check. Keeps the quick result on failure. */
+  async function deepCheck() {
+    if (!photo) return;
+    setBusy('deep');
+    setError(null);
+    try {
+      setResult(await requestScan(photo, label ?? undefined, 'deep'));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'The deep check failed. Please try again.');
     } finally {
       setBusy(null);
     }
@@ -131,7 +145,14 @@ export default function ScanScreen() {
           </Text>
         </View>
       ) : result ? (
-        <ScanResultView result={result} saving={busy === 'saving'} onSave={save} onReset={reset} />
+        <ScanResultView
+          result={result}
+          saving={busy === 'saving' || busy === 'deep'}
+          onSave={save}
+          onReset={reset}
+          onDeepCheck={deepCheck}
+          deepChecking={busy === 'deep'}
+        />
       ) : photo ? (
         <View style={styles.actions}>
           <Button label="Scan" onPress={scan} />

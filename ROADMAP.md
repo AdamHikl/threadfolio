@@ -19,7 +19,10 @@ Milestones are in order. Each one should end with a working app you can try on a
 - [x] "Before you buy" checklist for each category (curated rules + AI notes)
 - [x] "Check real prices" links to sold-listing searches (eBay, Etsy, Depop) that open in the browser
 - [x] Save to Collection or Wishlist, with photos kept on the device
-- [ ] Try real scans with an API key on a set of test photos and tune the prompt
+- [x] Compare Opus 5.5, Sonnet 5.5 and Haiku 5.5, with and without web search, on test photos
+- [x] Quick scan on Sonnet 5.5; optional "Deep check" on Opus 5.5 with web search and sources
+- [ ] Larger comparison (30+ photos with known prices), run twice each, to measure price accuracy
+- [ ] Detail rules the models missed (e.g. Levi's "big E" tab = pre-1971) and prompting for a label photo on valuable pieces
 - [ ] Deploy the scan route (EAS Hosting) with rate limiting, and point production builds at it
 - [ ] Curated checklist rules by era, not just category
 

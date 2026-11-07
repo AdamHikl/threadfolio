@@ -42,9 +42,18 @@ export type ScanResult = z.infer<typeof ScanResultSchema>;
 export const SourceSchema = z.object({ title: z.string(), url: z.string() });
 export type Source = z.infer<typeof SourceSchema>;
 
+/**
+ * Scan depth. `quick` is the default in-shop scan (fast, no web search).
+ * `deep` is the on-demand "Deep check": a stronger model that also searches
+ * the web for current prices and buying guidance.
+ */
+export const ScanModeSchema = z.enum(['quick', 'deep']);
+export type ScanMode = z.infer<typeof ScanModeSchema>;
+
 /** What `/api/scan` returns: the model's result plus any web sources it used. */
 export const ScanResponseSchema = ScanResultSchema.extend({
   sources: z.array(SourceSchema).default([]),
+  mode: ScanModeSchema.default('quick'),
 });
 export type ScanResponse = z.infer<typeof ScanResponseSchema>;
 
@@ -52,9 +61,10 @@ export type ScanResponse = z.infer<typeof ScanResponseSchema>;
 export const ScanRequestSchema = z.object({
   photo: z.string().min(1).describe('Base64 JPEG of the piece'),
   labelPhoto: z.string().min(1).optional().describe('Base64 JPEG of the label or tag'),
+  mode: ScanModeSchema.default('quick'),
 });
 
-export type ScanRequest = z.infer<typeof ScanRequestSchema>;
+export type ScanRequest = z.input<typeof ScanRequestSchema>;
 
 /** Tidy a model result: clamp confidence, order ranges, cap the checklist. */
 export function normalizeScanResult(r: ScanResult): ScanResult {

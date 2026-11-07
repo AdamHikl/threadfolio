@@ -9,6 +9,7 @@ import { MOCK_SCAN_RESULT } from '@/scan/mock';
 import {
   normalizeScanResult,
   ScanResultSchema,
+  type ScanMode,
   type ScanRequest,
   type ScanResponse,
   type ScanResult,
@@ -24,7 +25,9 @@ export class ScanError extends Error {
   }
 }
 
-export const DEFAULT_MODEL = 'claude-opus-5-5';
+/** Quick scan default and Deep check default. */
+export const DEFAULT_MODEL = 'claude-sonnet-5-5';
+export const DEEP_MODEL = 'claude-opus-5-5';
 
 const SYSTEM_PROMPT = `You help people who buy vintage and secondhand clothing to wear and collect.
 They are standing in a shop or market and want to know what a piece is, whether the asking price is fair, and what to inspect before paying.
@@ -50,9 +53,9 @@ const SUBMIT_TOOL: Anthropic.Tool = {
 };
 
 export type ScanOptions = {
-  /** Claude model id; defaults to SCAN_MODEL or claude-opus-5-5. */
+  /** Override the model chosen by the scan mode. */
   model?: string;
-  /** Let the model search the web for prices and buying guidance. */
+  /** Override whether the model may search the web. */
   webSearch?: boolean;
 };
 
@@ -105,7 +108,7 @@ function addUsage(total: Usage, usage: Anthropic.Usage) {
 }
 
 /** One structured-output call, no tools. Fast and cheapest. */
-async function scanPlain(req: ScanRequest, model: string, usage: Usage): Promise<ScanResponse> {
+async function scanPlain(req: ScanRequest, model: string, usage: Usage): Promise<Omit<ScanResponse, 'mode'>> {
   const response = await getClient().messages.parse({
     model,
     max_tokens: 16000,
@@ -138,7 +141,7 @@ function collectSources(content: Anthropic.ContentBlock[], into: Map<string, Sou
  * combined with structured output, so the final answer comes back through a
  * strict `submit_scan` tool instead.
  */
-async function scanWithSearch(req: ScanRequest, model: string, usage: Usage): Promise<ScanResponse> {
+async function scanWithSearch(req: ScanRequest, model: string, usage: Usage): Promise<Omit<ScanResponse, 'mode'>> {
   const messages: Anthropic.MessageParam[] = [{ role: 'user', content: userContent(req) }];
   const sources = new Map<string, Source>();
 
@@ -185,13 +188,29 @@ async function scanWithSearch(req: ScanRequest, model: string, usage: Usage): Pr
   throw new ScanError('The scan took too long. Please try again.', 504);
 }
 
+/**
+ * Settings for each scan mode, chosen from a model comparison on test photos
+ * (see scripts/compare-models.ts): Sonnet without search was fastest at
+ * near-Opus quality; Opus with search gave the most detailed answers.
+ */
+export function modeSettings(mode: ScanMode): { model: string; webSearch: boolean } {
+  return mode === 'deep'
+    ? { model: process.env.SCAN_DEEP_MODEL ?? DEEP_MODEL, webSearch: true }
+    : {
+        model: process.env.SCAN_MODEL ?? DEFAULT_MODEL,
+        webSearch: process.env.SCAN_WEB_SEARCH === 'true',
+      };
+}
+
 export async function runScan(req: ScanRequest, options: ScanOptions = {}): Promise<ScanRun> {
-  const model = options.model ?? process.env.SCAN_MODEL ?? DEFAULT_MODEL;
-  const webSearch = options.webSearch ?? process.env.SCAN_WEB_SEARCH === 'true';
+  const mode: ScanMode = req.mode ?? 'quick';
+  const settings = modeSettings(mode);
+  const model = options.model ?? settings.model;
+  const webSearch = options.webSearch ?? settings.webSearch;
   const started = Date.now();
   const usage: Usage = { inputTokens: 0, outputTokens: 0, searches: 0 };
 
-  let response: ScanResponse;
+  let response: Omit<ScanResponse, 'mode'>;
   if (provider() === 'mock') {
     response = { ...MOCK_SCAN_RESULT, sources: [] };
   } else {
@@ -202,7 +221,7 @@ export async function runScan(req: ScanRequest, options: ScanOptions = {}): Prom
 
   const normalized: ScanResult = normalizeScanResult(response);
   return {
-    response: { ...normalized, sources: response.sources },
+    response: { ...normalized, sources: response.sources, mode },
     model,
     webSearch,
     durationMs: Date.now() - started,

@@ -42,7 +42,12 @@ cp .env.example .env   # optional: add ANTHROPIC_API_KEY for real scans
 npx expo start         # scan the QR code with Expo Go, or press i / a
 ```
 
-Without an API key, scans return a made-up sample result so you can try the whole flow at no cost. With `ANTHROPIC_API_KEY` set in `.env`, the `/api/scan` route sends the photo to Claude (model `claude-opus-5-5` by default; override with `SCAN_MODEL`). The key is read only on the server and never ships in the app.
+Without an API key, scans return a made-up sample result so you can try the whole flow at no cost. With `ANTHROPIC_API_KEY` set in `.env`, the `/api/scan` route sends the photo to Claude. The key is read only on the server and never ships in the app.
+
+- **Quick scan** (default): Claude Sonnet 5.5, no web search. About 5–8 seconds and about $0.01 per scan.
+- **Deep check** (button on the result): Claude Opus 5.5 with web search for current listings, collector forums and guides, plus the sources it checked. About 15–20 seconds and about $0.12 per scan.
+
+These defaults come from a comparison on test photos; run your own with `npm run compare -- <photo-folder>` (results go to the git-ignored `eval-results/`). Override the models with `SCAN_MODEL` and `SCAN_DEEP_MODEL`.
 
 Development builds also fill the app with a few made-up sample pieces so the screens aren't empty.
 

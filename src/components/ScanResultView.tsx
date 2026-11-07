@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { Linking, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Linking,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 import {
   dollarsToCents,
@@ -19,6 +27,9 @@ type Props = {
   saving: boolean;
   onSave: (status: 'collection' | 'wishlist', tagPrice: number | null) => void;
   onReset: () => void;
+  /** Run the slower, more thorough scan. Omit to hide the Deep check card. */
+  onDeepCheck?: () => void;
+  deepChecking?: boolean;
 };
 
 const VERDICT_TEXT: Record<PriceVerdict, string> = {
@@ -33,10 +44,17 @@ function confidenceLabel(confidence: number): string {
   return 'Low confidence: double-check before buying';
 }
 
-export function ScanResultView({ result, saving, onSave, onReset }: Props) {
+export function ScanResultView({
+  result,
+  saving,
+  onSave,
+  onReset,
+  onDeepCheck,
+  deepChecking,
+}: Props) {
   const c = useColors();
   const [tagText, setTagText] = useState('');
-  const [checked, setChecked] = useState<Set<number>>(new Set());
+  const [checked, setChecked] = useState<Set<string>>(new Set());
 
   const tagPrice = parsePriceInput(tagText);
   const vintage = dollarsToCents(result.vintagePrice);
@@ -63,7 +81,10 @@ export function ScanResultView({ result, saving, onSave, onReset }: Props) {
           {result.title}
         </Text>
         {meta ? <Text style={[styles.body, { color: c.muted }]}>{meta}</Text> : null}
-        <Text style={[styles.small, { color: c.muted }]}>{confidenceLabel(result.confidence)}</Text>
+        <Text style={[styles.small, { color: c.muted }]}>
+          {result.mode === 'deep' ? 'Deep check · ' : ''}
+          {confidenceLabel(result.confidence)}
+        </Text>
         <Text style={[styles.body, { color: c.text }]}>{result.summary}</Text>
       </View>
 
@@ -72,6 +93,29 @@ export function ScanResultView({ result, saving, onSave, onReset }: Props) {
         <Row c={c} label="In vintage shops" value={formatRange(vintage)} />
         <Text style={[styles.small, { color: c.muted }]}>Estimates. Check real sold prices below.</Text>
       </Card>
+
+      {result.mode === 'quick' && onDeepCheck ? (
+        <Card c={c} title="Want a closer look?">
+          <Text style={[styles.body, { color: c.muted }]}>
+            Deep check uses a stronger model and searches recent listings, collector forums and
+            guides. It takes about 15 seconds.
+          </Text>
+          {deepChecking ? (
+            <View style={styles.busyRow} accessibilityLiveRegion="polite">
+              <ActivityIndicator color={c.accent} />
+              <Text style={[styles.body, { color: c.muted }]}>Searching listings and guides…</Text>
+            </View>
+          ) : (
+            <Button
+              label="Deep check"
+              variant="secondary"
+              disabled={saving}
+              accessibilityHint="Runs a slower, more thorough scan that searches the web"
+              onPress={onDeepCheck}
+            />
+          )}
+        </Card>
+      ) : null}
 
       <Card c={c} title="Is the price fair?">
         <TextInput
@@ -95,8 +139,8 @@ export function ScanResultView({ result, saving, onSave, onReset }: Props) {
       </Card>
 
       <Card c={c} title="Before you buy">
-        {checklist.map((item, i) => {
-          const done = checked.has(i);
+        {checklist.map((item) => {
+          const done = checked.has(item);
           return (
             <Pressable
               key={item}
@@ -105,8 +149,8 @@ export function ScanResultView({ result, saving, onSave, onReset }: Props) {
               onPress={() =>
                 setChecked((prev) => {
                   const next = new Set(prev);
-                  if (next.has(i)) next.delete(i);
-                  else next.add(i);
+                  if (next.has(item)) next.delete(item);
+                  else next.add(item);
                   return next;
                 })
               }
@@ -202,4 +246,5 @@ const styles = StyleSheet.create({
   checkRow: { flexDirection: 'row', gap: 10, alignItems: 'flex-start', minHeight: 44, paddingVertical: 4 },
   checkBox: { fontSize: 20, lineHeight: 22 },
   linkRow: { minHeight: 44, justifyContent: 'center' },
+  busyRow: { flexDirection: 'row', alignItems: 'center', gap: 10, minHeight: 48 },
 });
