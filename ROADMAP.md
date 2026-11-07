@@ -27,13 +27,16 @@ Milestones are in order. Each one should end with a working app you can try on a
 - [ ] Curated checklist rules by era, not just category
 
 ## M2 — Collection (~10 h)
-- [ ] Collection grid with filters (category, era, brand, colour)
-- [ ] Item detail: photos, story, where and when bought, price paid vs. estimated value
+- [x] Collection list with photo thumbnails and category filters (totals follow the filter)
+- [x] Item detail: photos, where and when bought, price paid vs. estimated value, notes
+- [x] Edit and delete pieces (deleting also removes their photo files)
+- [ ] Filters by era, brand and colour; grid view
 - [ ] Collection total value and value over time
 - [ ] Background removal for clean item cut-outs
 - [ ] Care guide for each item
 
 ## M3 — Wishlist (~6 h)
+- [x] Move a wishlist piece to the collection with "I bought it" (target price as the default price paid)
 - [ ] Wishlist entries by brand, category, era and target price
 - [ ] Estimated wishlist total cost
 - [ ] Turn a wishlist entry into a collection item when you buy it
