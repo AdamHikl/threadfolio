@@ -49,7 +49,7 @@ Without an API key, scans return a made-up sample result so you can try the whol
 
 These defaults come from a comparison on test photos; run your own with `npm run compare -- <photo-folder>` (results go to the git-ignored `eval-results/`). Override the models with `SCAN_MODEL` and `SCAN_DEEP_MODEL`.
 
-Development builds also fill the app with a few made-up sample pieces so the screens aren't empty.
+Development builds also fill the app with a few made-up sample pieces so the screens aren't empty. Those sample pieces have no photos. For testing with real pictures, eight openly licensed clothing photos are in [`assets/sample-photos/`](assets/sample-photos/CREDITS.md); they aren't linked to the sample pieces yet.
 
 Checks (the same ones CI runs):
 
@@ -68,3 +68,5 @@ Issues and pull requests are welcome. Please use made-up sample data in issues a
 [Mozilla Public License 2.0](LICENSE) (MPL-2.0). Copyright (C) 2026 Adam Hikl.
 
 If you modify Threadfolio's files and distribute them, you must share those modified files under MPL 2.0. The license does not grant rights to the "Threadfolio" name or logo.
+
+The sample clothing photos in [`assets/sample-photos/`](assets/sample-photos/CREDITS.md) are not covered by MPL 2.0. They come from Wikimedia Commons under their own licenses (CC0, public domain, CC BY 2.0, CC BY-SA 2.0 and CC BY-SA 4.0), with authors and sources listed in [CREDITS.md](assets/sample-photos/CREDITS.md).
