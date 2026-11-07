@@ -38,6 +38,16 @@ export const ScanResultSchema = z.object({
 
 export type ScanResult = z.infer<typeof ScanResultSchema>;
 
+/** A web page the scan service looked at, shown to the user as a source. */
+export const SourceSchema = z.object({ title: z.string(), url: z.string() });
+export type Source = z.infer<typeof SourceSchema>;
+
+/** What `/api/scan` returns: the model's result plus any web sources it used. */
+export const ScanResponseSchema = ScanResultSchema.extend({
+  sources: z.array(SourceSchema).default([]),
+});
+export type ScanResponse = z.infer<typeof ScanResponseSchema>;
+
 /** Request body sent by the app: one main photo and an optional label photo. */
 export const ScanRequestSchema = z.object({
   photo: z.string().min(1).describe('Base64 JPEG of the piece'),

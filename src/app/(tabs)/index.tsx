@@ -8,7 +8,7 @@ import { Button } from '@/components/Button';
 import { ScanResultView } from '@/components/ScanResultView';
 import { saveScannedItem } from '@/db/saveScan';
 import { preparePhoto, requestScan, type PreparedPhoto } from '@/scan/client';
-import type { ScanResult } from '@/scan/schema';
+import type { ScanResponse } from '@/scan/schema';
 import { useColors } from '@/theme/colors';
 
 type Source = 'camera' | 'library';
@@ -35,7 +35,7 @@ export default function ScanScreen() {
   const router = useRouter();
   const [photo, setPhoto] = useState<PreparedPhoto | null>(null);
   const [label, setLabel] = useState<PreparedPhoto | null>(null);
-  const [result, setResult] = useState<ScanResult | null>(null);
+  const [result, setResult] = useState<ScanResponse | null>(null);
   const [busy, setBusy] = useState<'preparing' | 'scanning' | 'saving' | null>(null);
   const [error, setError] = useState<string | null>(null);
 

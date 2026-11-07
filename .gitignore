@@ -44,3 +44,7 @@ yarn-error.*
 .env
 .env.*
 !.env.example
+
+# model comparison output (may contain photos and results)
+eval-results/
+test-photos/

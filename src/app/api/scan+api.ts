@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    return Response.json(await runScan(parsed.data));
+    return Response.json((await runScan(parsed.data)).response);
   } catch (e) {
     if (e instanceof ScanError) return error(e.message, e.status);
     if (e instanceof Anthropic.RateLimitError) return error('Too many scans right now. Try again shortly.', 429);

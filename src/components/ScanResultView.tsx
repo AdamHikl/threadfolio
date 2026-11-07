@@ -10,12 +10,12 @@ import {
 } from '@/lib/money';
 import { buildChecklist } from '@/scan/checklist';
 import { priceCheckLinks } from '@/scan/links';
-import type { ScanResult } from '@/scan/schema';
+import type { ScanResponse } from '@/scan/schema';
 import { useColors, type Colors } from '@/theme/colors';
 import { Button } from './Button';
 
 type Props = {
-  result: ScanResult;
+  result: ScanResponse;
   saving: boolean;
   onSave: (status: 'collection' | 'wishlist', tagPrice: number | null) => void;
   onReset: () => void;
@@ -129,6 +129,22 @@ export function ScanResultView({ result, saving, onSave, onReset }: Props) {
           </Pressable>
         ))}
       </Card>
+
+      {result.sources.length > 0 ? (
+        <Card c={c} title="Sources checked">
+          {result.sources.map((source) => (
+            <Pressable
+              key={source.url}
+              accessibilityRole="link"
+              onPress={() => Linking.openURL(source.url)}
+              style={styles.linkRow}>
+              <Text numberOfLines={2} style={[styles.small, { color: c.accent }]}>
+                {source.title || source.url} ↗
+              </Text>
+            </Pressable>
+          ))}
+        </Card>
+      ) : null}
 
       <View style={styles.stack}>
         <Button

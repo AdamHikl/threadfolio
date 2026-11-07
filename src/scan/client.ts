@@ -1,6 +1,6 @@
 import { ImageManipulator, SaveFormat } from 'expo-image-manipulator';
 
-import { ScanResultSchema, type ScanResult } from './schema';
+import { ScanResponseSchema, type ScanResponse } from './schema';
 
 export type PreparedPhoto = { uri: string; base64: string };
 
@@ -15,7 +15,7 @@ export async function preparePhoto(uri: string): Promise<PreparedPhoto> {
 }
 
 /** Send photos to the scan service and validate what comes back. */
-export async function requestScan(photo: PreparedPhoto, label?: PreparedPhoto): Promise<ScanResult> {
+export async function requestScan(photo: PreparedPhoto, label?: PreparedPhoto): Promise<ScanResponse> {
   const response = await fetch('/api/scan', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -29,7 +29,7 @@ export async function requestScan(photo: PreparedPhoto, label?: PreparedPhoto): 
         : 'The scan failed. Please try again.';
     throw new Error(message);
   }
-  const parsed = ScanResultSchema.safeParse(body);
+  const parsed = ScanResponseSchema.safeParse(body);
   if (!parsed.success) throw new Error('The scan returned something unexpected.');
   return parsed.data;
 }
