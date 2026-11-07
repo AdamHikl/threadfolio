@@ -2,9 +2,11 @@
 
 Milestones are in order. Each one should end with a working app you can try on a phone. Hour figures are rough estimates.
 
+A step is ticked only when its checks in [docs/QUALITY_GATES.md](docs/QUALITY_GATES.md) pass. That file also lists what each ticked step has and hasn't been verified on (code checks, simulator, real phone).
+
 ## M0 — Foundations (~4 h)
 - [x] Expo + TypeScript scaffold
-- [x] AGPL v3 license, README, roadmap, `.env.example`
+- [x] MPL 2.0 license, README, roadmap, `.env.example`
 - [x] Navigation with tabs: Scan · Collection · Outfits · Wishlist
 - [x] Local SQLite database and data model (items, photos, outfits, wishlist)
 - [x] Collection and wishlist lists with value totals (made-up sample data in dev builds)
@@ -31,15 +33,14 @@ Milestones are in order. Each one should end with a working app you can try on a
 - [x] Item detail: photos, where and when bought, price paid vs. estimated value, notes
 - [x] Edit and delete pieces (deleting also removes their photo files)
 - [ ] Filters by era, brand and colour; grid view
-- [ ] Collection total value and value over time
+- [ ] Collection value over time (current total value is already shown)
 - [ ] Background removal for clean item cut-outs
 - [ ] Care guide for each item
 
 ## M3 — Wishlist (~6 h)
 - [x] Move a wishlist piece to the collection with "I bought it" (target price as the default price paid)
-- [ ] Wishlist entries by brand, category, era and target price
-- [ ] Estimated wishlist total cost
-- [ ] Turn a wishlist entry into a collection item when you buy it
+- [x] Estimated wishlist total cost
+- [ ] Add wishlist entries without scanning (brand, category, era, target price)
 
 ## M4 — Outfits (~12 h)
 - [ ] Outfit canvas: drag cut-outs, layer, resize

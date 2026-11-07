@@ -12,7 +12,7 @@ If you buy it, save it to your **collection**, see what the collection is worth,
 
 Threadfolio is built for buyers, not resellers: it helps you avoid overpaying and enjoy what you own, not flip it for profit.
 
-> Status: early development. See [ROADMAP.md](ROADMAP.md) for what's being built next and [docs/PLAN.md](docs/PLAN.md) for the full build plan.
+> Status: early development. See [ROADMAP.md](ROADMAP.md) for what's being built next, [docs/QUALITY_GATES.md](docs/QUALITY_GATES.md) for the checks each step must pass, and [docs/PLAN.md](docs/PLAN.md) for the full build plan.
 
 ## Who it's for
 
