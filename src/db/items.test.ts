@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { summarizeCollection, wishlistTotal } from './items';
+import { buildUpdate, categoriesIn, summarizeCollection, wishlistTotal } from './items';
 import { SAMPLE_ITEMS } from './sampleData';
 import type { ItemRow, NewItem } from './types';
 
@@ -42,5 +42,34 @@ describe('sample data', () => {
       expect(item.vintage_low).not.toBeNull();
       expect(item.vintage_low!).toBeLessThanOrEqual(item.vintage_high!);
     }
+  });
+});
+
+describe('buildUpdate', () => {
+  it('only updates editable columns, in a fixed order', () => {
+    const update = buildUpdate('abc', {
+      notes: 'Mended cuff',
+      title: 'Jeans',
+      // @ts-expect-error status is not editable here
+      status: 'wishlist',
+    });
+    expect(update).toEqual({
+      sql: 'UPDATE item SET title = ?, notes = ? WHERE id = ?',
+      params: ['Jeans', 'Mended cuff', 'abc'],
+    });
+  });
+
+  it('writes null for cleared fields and skips empty patches', () => {
+    expect(buildUpdate('abc', { brand: null })?.params).toEqual([null, 'abc']);
+    expect(buildUpdate('abc', {})).toBeNull();
+  });
+});
+
+describe('categoriesIn', () => {
+  it('lists each category once, sorted', () => {
+    expect(categoriesIn([{ category: 'tees' }, { category: 'denim' }, { category: 'tees' }])).toEqual([
+      'denim',
+      'tees',
+    ]);
   });
 });
