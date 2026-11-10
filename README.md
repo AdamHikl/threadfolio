@@ -70,3 +70,5 @@ Issues and pull requests are welcome. Please use made-up sample data in issues a
 If you modify Threadfolio's files and distribute them, you must share those modified files under MPL 2.0. The license does not grant rights to the "Threadfolio" name or logo.
 
 The sample clothing photos in [`assets/sample-photos/`](assets/sample-photos/CREDITS.md) are not covered by MPL 2.0. They come from Wikimedia Commons under their own licenses (CC0, public domain, CC BY 2.0, CC BY-SA 2.0 and CC BY-SA 4.0), with authors and sources listed in [CREDITS.md](assets/sample-photos/CREDITS.md).
+
+This line was added by a Jorah build test on 2026-11-10 to try draft pull requests.
